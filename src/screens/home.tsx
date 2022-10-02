@@ -6,7 +6,7 @@ import { Header } from '../components';
 const Home: React.FC = () => {
     return (
         <div>
-            <Header label={"Code"} component={<ul className="c-header__items">
+            <Header label={"Codewexy"} component={<ul className="c-header__items">
                 {homePageRoute.map((router) => {
                     return (
                         <li key={router.id} className="c-header__item">
@@ -18,7 +18,7 @@ const Home: React.FC = () => {
 
             <h1 style={{
                 textAlign:"center"
-            }}>Welcome code</h1>
+            }}>Welcome Codewexy</h1>
         </div>
     );
 }
