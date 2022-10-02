@@ -1,0 +1,64 @@
+
+$color: #87CEEB;
+$danger: red;
+$black: black;
+$radius: 6px;
+
+ul {
+  list-style-type: none;
+  margin: 0px;
+}
+
+.c-header {
+  background-color: $color;
+  height: 50px;
+  padding: 10px 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+
+  &__items {
+    display: flex;
+  }
+
+  &__item {
+    margin-right: 20px;
+  }
+
+  &__label {
+    cursor: pointer;
+  }
+}
+
+.c-select {
+  padding: 9px;
+  border-radius: $radius;
+}
+
+.c-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 25px;
+  border: 1px solid $black;
+  padding: 30px;
+  width: fit-content;
+  border-radius: $radius;
+  margin: auto;
+  margin-top:20px;
+
+  &__error {
+    color: $danger ;
+  }
+}
+
+.c-button {
+  padding: 5px 10px;
+  border-radius: $radius;
+  background-color: black;
+  color: white;
+  margin-top: 10px;
+  cursor: pointer;
+}
