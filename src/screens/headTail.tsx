@@ -22,7 +22,7 @@ const About: React.FC = () => {
     const [error, setError] = useState<boolean>(false)
     const select = useSelector((state: PropsReduxState) => state)
     const dispatch = useDispatch()
-    console.log("select",select)
+
 
     useEffect(()=>{
         const users = JSON.parse(sessionStorage.getItem("data") || "[]");
@@ -112,7 +112,8 @@ const About: React.FC = () => {
             </div>
             <div>{Array.from(Object.keys(groupData), k => groupData[k]).length > 0 ?
                 <div style={{
-                    display: "flex"
+                    display: "flex",
+                    justifyContent:"center"
                 }}>
                     {Array.from(Object.keys(groupData), k => groupData[k]).map((data, index) => {
                         return (
