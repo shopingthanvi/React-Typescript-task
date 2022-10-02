@@ -2,26 +2,31 @@ import React, { useState } from 'react';
 import { HandT } from '../utils/comman';
 import { useSelector, useDispatch } from 'react-redux';
 import { add } from '../store/index';
-import { Header, SelectInput,Button } from '../components';
+import { Header, SelectInput, Button } from '../components';
 import { useNavigate } from 'react-router-dom';
 
-
-// interface PropsState{
-// counterme?:[]
-// }
+interface Item {
+    value: string;
+    rowValue: string
+}
+interface Items {
+    items: Item[]
+}
+interface PropsReduxState {
+    state: Items
+}
 
 const About: React.FC = () => {
     let navigate = useNavigate();
     const [value, setValue] = useState<string>()
-    const [error, setError] = useState<string>()
-    const select = useSelector((state: any) => state)
+    const [error, setError] = useState<boolean>(false)
+    const select = useSelector((state: PropsReduxState) => state)
     const dispatch = useDispatch()
 
-console.log("selectselectselect",select)
     const onFormSubmit = () => {
-        if (select.counterme.people.length > 0) {
-            const length = select.counterme.people.length
-            const item = select.counterme.people[length - 1]
+        if (select.state.items.length > 0) {
+            const length = select.state.items.length
+            const item = select.state.items[length - 1]
             if (item?.value === value) {
                 const object = {
                     rowValue: item.rowValue,
@@ -46,7 +51,7 @@ console.log("selectselectselect",select)
 
     }
 
-    const groupData = select?.counterme?.people.reduce(function (acc: any, obj: any) {
+    const groupData = select?.state?.items.reduce(function (acc: any, obj: Item) {
         let key = obj["rowValue"];
         if (!acc[key]) {
             acc[key] = [];
@@ -56,19 +61,15 @@ console.log("selectselectselect",select)
     }, {});
 
 
-    const checkValue = (e: any) => {
+    const checkValue = (e: React.SyntheticEvent) => {
         e.preventDefault()
         if (value) {
-            console.log("errorerror", value)
             onFormSubmit()
-        } else {
-            console.log("errorerror", value)
-            setError("Show Error")
+        }else{
+            setError(true)
         }
-
     }
 
-    console.log("value")
     return (
         <div>
             <Header label={"Back"} onLabelClick={() => {
@@ -82,12 +83,10 @@ console.log("selectselectselect",select)
                     onChange={(event: React.FormEvent<HTMLSelectElement>) => {
                         const value: string = event.currentTarget.value;
                         setValue(value)
-                        setError('')
+                        setError(false)
 
                     }} />
-                    <Button type="submit"/>
-
-                {/* <input type="submit" className="c-form__button" /> */}
+                <Button type="submit" />
                 {error && <p className="c-form__error">Please select value from dropdown</p>}
             </form>
 
@@ -105,7 +104,7 @@ console.log("selectselectselect",select)
                             <div key={index} style={{
                                 marginRight: "10px"
                             }}>
-                                {data.map((task: any, index: any) => {
+                                {data.map((task: Item, index: number) => {
                                     return (
                                         <div key={index}>
                                             <h2> {task.value}</h2>

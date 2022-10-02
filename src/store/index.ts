@@ -1,25 +1,18 @@
-import { createSlice,PayloadAction } from '@reduxjs/toolkit'
-
-interface Person {
-    // properties
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import {Items,Item} from "./../modal"
+const initialState: Items = {
+  items: []
 }
 
-interface InviteeState {
-  people: any
-}
-const initialState: any = {
-    people :[]
-  }
-
-export const counterSlice = createSlice({
- name: 'counteryou',
- initialState,
- reducers: {
-    add(state, action: PayloadAction<Person>) {
-        state.people.push(action.payload);
+export const itemSlice = createSlice({
+  name: 'item',
+  initialState,
+  reducers: {
+    add(state, action: PayloadAction<Item>) {
+      state.items.push(action.payload);
     },
- },
+  },
 })
-export const { add } = counterSlice.actions
+export const { add } = itemSlice.actions
 
-export default counterSlice.reducer
+export default itemSlice.reducer
