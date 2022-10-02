@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { HandT } from '../utils/comman';
 import { useSelector, useDispatch } from 'react-redux';
 import { add } from '../store/index';
@@ -22,8 +22,18 @@ const About: React.FC = () => {
     const [error, setError] = useState<boolean>(false)
     const select = useSelector((state: PropsReduxState) => state)
     const dispatch = useDispatch()
+    console.log("select",select)
+
+    useEffect(()=>{
+        const users = JSON.parse(sessionStorage.getItem("data") || "[]");
+        users?.map((data:Item)=>{
+            return dispatch(add(data))
+           
+        })
+    },[])
 
     const onFormSubmit = () => {
+        let getDataFromLocalStroage=JSON.parse(sessionStorage.getItem("data")|| '[]')
         if (select.state.items.length > 0) {
             const length = select.state.items.length
             const item = select.state.items[length - 1]
@@ -33,12 +43,14 @@ const About: React.FC = () => {
                     value: value
                 }
                 dispatch(add(object))
+                getDataFromLocalStroage.push(object)
             } else {
                 const object = {
                     rowValue: item.rowValue + 1,
                     value: value
                 }
                 dispatch(add(object))
+                getDataFromLocalStroage.push(object)
             }
         } else {
             const object = {
@@ -46,10 +58,13 @@ const About: React.FC = () => {
                 value: value
             }
             dispatch(add(object))
+            getDataFromLocalStroage.push(object)
         }
         setValue('')
-
+        sessionStorage.setItem("data", JSON.stringify(getDataFromLocalStroage));
     }
+
+
 
     const groupData = select?.state?.items.reduce(function (acc: any, obj: Item) {
         let key = obj["rowValue"];
